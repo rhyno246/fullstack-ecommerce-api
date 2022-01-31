@@ -14,7 +14,7 @@ import store from "./redux/store";
 import { loadUser } from "./redux/actions/userAction";
 import Profile from "./view/Profile";
 import ProtectedRoute from "./component/routing/ProtectedRoute";
-import Dashboard from "./view/Dashboard";
+import Dashboard from "./view/admin/Dashboard";
 import Order from "./view/Order";
 import UpdateProfile from "./view/UpdateProfile";
 import ChangePassword from "./view/ChangePassword";
@@ -29,6 +29,10 @@ import Payment from "./view/Payment";
 import { loadStripe } from "@stripe/stripe-js";
 import OrderSuccess from "./view/OrderSuccess";
 import OrderDetail from "./view/OrderDetail";
+import Products from "./view/admin/Products";
+import Orders from "./view/admin/Orders";
+import Users from "./view/admin/Users";
+import Reviews from "./view/admin/Reviews";
 function App() {
   const [stripeApiKey, setStripeApiKey] = useState("");
 
@@ -83,6 +87,31 @@ function App() {
           path="/admin/dashboard"
           component={Dashboard}
         />
+        <ProtectedRoute
+          isAdmin={true}
+          exact
+          path="/admin/products"
+          component={Products}
+        />
+        <ProtectedRoute
+          isAdmin={true}
+          exact
+          path="/admin/orders"
+          component={Orders}
+        />
+        <ProtectedRoute
+          isAdmin={true}
+          exact
+          path="/admin/users"
+          component={Users}
+        />
+        <ProtectedRoute
+          isAdmin={true}
+          exact
+          path="/admin/reviews"
+          component={Reviews}
+        />
+
         <ProtectedRoute exact path="/success" component={OrderSuccess} />
 
         <Route path="*" component={NotFound} />

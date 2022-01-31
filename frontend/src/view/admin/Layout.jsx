@@ -12,6 +12,9 @@ import Container from "@mui/material/Container";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import { Divider, List } from "@mui/material";
+import { mainListItems } from "../../component/listItems";
+import MetaData from "../../component/layout/MetaData";
 
 const drawerWidth = 240;
 
@@ -61,13 +64,14 @@ const Drawer = styled(MuiDrawer, {
 
 const mdTheme = createTheme();
 
-const Dashboard = () => {
+const Layout = ({ children }) => {
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
   };
   return (
     <ThemeProvider theme={mdTheme}>
+      <MetaData title="Ecommerce - Admin" />
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
         <AppBar position="absolute" open={open}>
@@ -117,6 +121,9 @@ const Dashboard = () => {
               <ChevronLeftIcon />
             </IconButton>
           </Toolbar>
+          <Divider />
+          <List>{mainListItems}</List>
+          <Divider />
         </Drawer>
         <Box
           component="main"
@@ -132,7 +139,7 @@ const Dashboard = () => {
         >
           <Toolbar />
           <Container maxWidth="xxl" sx={{ mt: 4, mb: 4 }}>
-            dds
+            {children}
           </Container>
         </Box>
       </Box>
@@ -140,4 +147,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Layout;

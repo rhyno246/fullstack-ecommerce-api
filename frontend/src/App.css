@@ -860,3 +860,15 @@ button.MuiButtonBase-root.MuiFab-root.MuiFab-circular.MuiFab-sizeLarge.MuiFab-pr
     font-size: 22px;
   }
 }
+
+.dashboard-menu a {
+  text-decoration: none;
+  color: #000;
+}
+
+.dashboard-menu .active {
+  color: #1976d2;
+}
+.dashboard-menu .active svg {
+  color: #1976d2;
+}
