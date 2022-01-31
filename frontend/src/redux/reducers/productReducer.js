@@ -6,6 +6,7 @@ const initialState = {
   error: null,
   productCount: 0,
   resultPerPage: 0,
+  success: null,
 };
 
 export const productReducer = (state = initialState, action) => {
@@ -49,6 +50,30 @@ export const productReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload,
       };
+    //review
+    case types.NEW_REVIEW_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case types.NEW_REVIEW_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: action.payload,
+      };
+    case types.NEW_REVIEW_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case types.NEW_REVIEW_RESET:
+      return {
+        ...state,
+        success: false,
+      };
+
     case types.CLEAR_ERROR:
       return {
         ...state,

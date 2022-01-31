@@ -48,6 +48,11 @@ function App() {
 
   return (
     <Router>
+      {stripeApiKey && (
+        <Elements stripe={loadStripe(stripeApiKey)}>
+          <ProtectedRoute exact path="/process/payment" component={Payment} />
+        </Elements>
+      )}
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/product/:id" component={ProductDetail} />
@@ -67,12 +72,6 @@ function App() {
         <ProtectedRoute exact path="/order/:id" component={OrderDetail} />
         <ProtectedRoute exact path="/me/update" component={UpdateProfile} />
 
-        <ProtectedRoute exact path="/success" component={OrderSuccess} />
-        {stripeApiKey && (
-          <Elements stripe={loadStripe(stripeApiKey)}>
-            <ProtectedRoute exact path="/process/payment" component={Payment} />
-          </Elements>
-        )}
         <ProtectedRoute
           exact
           path="/password/update"
@@ -84,6 +83,8 @@ function App() {
           path="/admin/dashboard"
           component={Dashboard}
         />
+        <ProtectedRoute exact path="/success" component={OrderSuccess} />
+
         <Route path="*" component={NotFound} />
       </Switch>
     </Router>

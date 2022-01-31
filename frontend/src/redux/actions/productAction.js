@@ -43,6 +43,24 @@ export const getProductDetail = (id) => async (dispatch) => {
   }
 };
 
+export const createNewReview = (review) => async (dispatch) => {
+  try {
+    dispatch({
+      type: types.NEW_REVIEW_REQUEST,
+    });
+    const data = await axiosConfig.put(`/review`, review);
+    dispatch({
+      type: types.NEW_REVIEW_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: types.NEW_REVIEW_FAIL,
+      payload: error.response.data.error,
+    });
+  }
+};
+
 export const clearErrors = () => async (dispatch) => {
   dispatch({ type: types.CLEAR_ERROR });
 };

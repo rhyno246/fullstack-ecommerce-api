@@ -1,28 +1,39 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../component/layout/Layout";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductDetail } from "../redux/actions/productAction";
+import {
+  createNewReview,
+  getProductDetail,
+} from "../redux/actions/productAction";
 import { useParams } from "react-router-dom";
-import { Button, Container, Grid, Rating } from "@mui/material";
+import {
+  Button,
+  Container,
+  Grid,
+  Rating,
+  TextareaAutosize,
+} from "@mui/material";
 import { useAlert } from "react-alert";
 import MetaData from "../component/layout/MetaData";
 import Reviews from "../component/Reviews";
 import { addItemsToCart } from "../redux/actions/cartAction";
 import InputNumber from "rc-input-number";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import { NEW_REVIEW_RESET } from "../redux/types";
 
 const ProductDetail = () => {
   const alert = useAlert();
+  const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
-  const { product, error } = useSelector((state) => state.products);
+  const { product, error, success } = useSelector((state) => state.products);
   const [quantity, setQuantity] = useState(1);
   const param = useParams();
   const { id } = param;
-  useEffect(() => {
-    if (error) {
-      return alert.error(error);
-    }
-    dispatch(getProductDetail(id));
-  }, [dispatch, id, error, alert]);
+
   const [index, setIndex] = useState(0);
   const hanleClickSlide = (i) => {
     setIndex(i);
@@ -49,9 +60,74 @@ const ProductDetail = () => {
     alert.success("Item Added To Cart");
   };
 
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const reviewSubmitHandler = () => {
+    const myForm = new FormData();
+
+    myForm.set("rating", rating);
+    myForm.set("comment", comment);
+    myForm.set("productId", id);
+    if (comment !== "") {
+      dispatch(createNewReview(myForm));
+      setOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    if (error) {
+      return alert.error(error);
+    }
+    if (success) {
+      alert.success("Review Submitted Successfully");
+      dispatch({ type: NEW_REVIEW_RESET });
+    }
+    dispatch(getProductDetail(id));
+  }, [dispatch, id, error, alert, success]);
+
   return (
     <Layout>
       <MetaData title={`Ecommerce - ${product.name}`} />
+
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        fullWidth={true}
+      >
+        <DialogTitle id="alert-dialog-title">Submit Review</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            <Rating
+              name="simple-controlled"
+              value={rating}
+              onChange={(e, newValue) => setRating(newValue)}
+            />
+            <TextareaAutosize
+              aria-label="minimum height"
+              minRows={10}
+              placeholder="Feild review product"
+              style={{ width: "97%", marginTop: "10px", padding: "8px" }}
+              onChange={(e) => setComment(e.target.value)}
+            />
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={reviewSubmitHandler} autoFocus>
+            Submit
+          </Button>
+        </DialogActions>
+      </Dialog>
+
       <Container>
         <Grid container spacing={2}>
           <Grid item xl={7} md={7} sm={12} xs={12}>
@@ -113,7 +189,9 @@ const ProductDetail = () => {
             </div>
 
             <div className="submit-review">
-              <Button variant="contained">Write Review</Button>
+              <Button variant="contained" onClick={handleClickOpen}>
+                Write Review
+              </Button>
               <div className="add-tocart">
                 <Button
                   variant="contained"
