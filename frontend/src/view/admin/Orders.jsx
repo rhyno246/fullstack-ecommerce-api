@@ -2,7 +2,7 @@ import React from "react";
 import Layout from "./Layout";
 
 const Orders = () => {
-  return <Layout>Orders</Layout>;
+  return <Layout title="Orders">Orders</Layout>;
 };
 
 export default Orders;

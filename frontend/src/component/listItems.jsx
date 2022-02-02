@@ -7,7 +7,9 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import PeopleIcon from "@mui/icons-material/People";
 import LayersIcon from "@mui/icons-material/Layers";
 import CommentIcon from "@mui/icons-material/Comment";
+import GroupIcon from "@mui/icons-material/Group";
 import { NavLink } from "react-router-dom";
+import { Box, Grid } from "@mui/material";
 
 export const mainListItems = (
   <div className="dashboard-menu">
@@ -56,4 +58,54 @@ export const mainListItems = (
       </ListItem>
     </NavLink>
   </div>
+);
+
+export const listItemsDashBoard = (
+  <Grid container spacing={5}>
+    <Grid item xl={3} md={3} sm={12} xs={12}>
+      <Box sx={{ boxShadow: 1, borderRadius: 2, padding: "30px 15px" }}>
+        <div className="icon-items">
+          <div className="icons">
+            <GroupIcon />
+          </div>
+          <div className="heading">Total Users</div>
+          <div className="total-number">20</div>
+        </div>
+      </Box>
+    </Grid>
+    <Grid item xl={3} md={3} sm={12} xs={12}>
+      <Box sx={{ boxShadow: 1, borderRadius: 2, padding: "30px 15px" }}>
+        <div className="icon-items">
+          <div className="icons">
+            <LayersIcon />
+          </div>
+          <div className="heading">Total Products</div>
+          <div className="total-number">20</div>
+        </div>
+      </Box>
+    </Grid>
+
+    <Grid item xl={3} md={3} sm={12} xs={12}>
+      <Box sx={{ boxShadow: 1, borderRadius: 2, padding: "30px 15px" }}>
+        <div className="icon-items">
+          <div className="icons">
+            <ShoppingCartIcon />
+          </div>
+          <div className="heading">Total Orders</div>
+          <div className="total-number">20</div>
+        </div>
+      </Box>
+    </Grid>
+    <Grid item xl={3} md={3} sm={12} xs={12}>
+      <Box sx={{ boxShadow: 1, borderRadius: 2, padding: "30px 15px" }}>
+        <div className="icon-items">
+          <div className="icons">
+            <CommentIcon />
+          </div>
+          <div className="heading">Total Reviews</div>
+          <div className="total-number">20</div>
+        </div>
+      </Box>
+    </Grid>
+  </Grid>
 );

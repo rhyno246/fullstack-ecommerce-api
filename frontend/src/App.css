@@ -872,3 +872,28 @@ button.MuiButtonBase-root.MuiFab-root.MuiFab-circular.MuiFab-sizeLarge.MuiFab-pr
 .dashboard-menu .active svg {
   color: #1976d2;
 }
+
+.icon-items {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.icon-items ul .heading {
+  font-size: 14px;
+}
+.icon-items .total-number {
+  font-size: 22px;
+  font-weight: 700;
+}
+.icon-items svg {
+  color: #fff;
+}
+.icon-items .icons {
+  width: 40px;
+  height: 40px;
+  background: #1976d2;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
