@@ -7,14 +7,14 @@ import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
-import Badge from "@mui/material/Badge";
 import Container from "@mui/material/Container";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import { Divider, List } from "@mui/material";
 import { mainListItems } from "../../component/listItems";
 import MetaData from "../../component/layout/MetaData";
+import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
+import { Link } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -101,11 +101,18 @@ const Layout = ({ children, title }) => {
             >
               {title}
             </Typography>
-            <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
+            <Link
+              to="/"
+              style={{
+                color: "#fff",
+                textDecoration: "none",
+                fontSize: "14px",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <KeyboardBackspaceIcon sx={{ marginRight: "2px" }} /> Home Page
+            </Link>
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>

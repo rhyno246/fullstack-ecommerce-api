@@ -33,6 +33,8 @@ import Products from "./view/admin/Products";
 import Orders from "./view/admin/Orders";
 import Users from "./view/admin/Users";
 import Reviews from "./view/admin/Reviews";
+import AddNewProduct from "./view/admin/AddNewProduct";
+import UpdateProduct from "./view/admin/UpdateProduct";
 function App() {
   const [stripeApiKey, setStripeApiKey] = useState("");
 
@@ -110,6 +112,18 @@ function App() {
           exact
           path="/admin/reviews"
           component={Reviews}
+        />
+        <ProtectedRoute
+          isAdmin={true}
+          exact
+          path="/admin/product"
+          component={AddNewProduct}
+        />
+        <ProtectedRoute
+          isAdmin={true}
+          exact
+          path="/admin/product/:id"
+          component={UpdateProduct}
         />
 
         <ProtectedRoute exact path="/success" component={OrderSuccess} />

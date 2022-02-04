@@ -28,17 +28,21 @@ const Home = () => {
         <Loader />
       ) : (
         <Container>
-          <Box sx={{ width: "100%" }}>
-            <Grid
-              container
-              rowSpacing={2}
-              columnSpacing={{ xs: 2, sm: 2, md: 2 }}
-            >
-              {products?.map((item, i) => (
-                <ProductItem key={i} product={item} />
-              ))}
-            </Grid>
-          </Box>
+          {products?.length ? (
+            <Box sx={{ width: "100%" }}>
+              <Grid
+                container
+                rowSpacing={2}
+                columnSpacing={{ xs: 2, sm: 2, md: 2 }}
+              >
+                {products?.map((item, i) => (
+                  <ProductItem key={i} product={item} />
+                ))}
+              </Grid>
+            </Box>
+          ) : (
+            <div className="product-notfound">Cannot find product</div>
+          )}
         </Container>
       )}
     </Layout>

@@ -55,7 +55,7 @@ const Product = () => {
     "PC",
     "Watch",
     "Tablet",
-    "Head Phone",
+    "HeadPhone",
   ];
 
   return (

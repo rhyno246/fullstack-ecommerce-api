@@ -2,7 +2,7 @@ import * as types from "../types";
 import axiosConfig from "../config/axiosConfig";
 
 export const getAllProduct =
-  (keyword = "", currentPage = 1, price = [0, 1000], category, ratings = 0) =>
+  (keyword = "", currentPage = 1, price = [0, 10000], category, ratings = 0) =>
   async (dispatch) => {
     let link = `/products?keyword=${keyword}&page=${currentPage}&price[gt]=${price[0]}&price[lt]=${price[1]}&ratings[gte]=${ratings}`;
     if (category) {
@@ -24,7 +24,6 @@ export const getAllProduct =
       });
     }
   };
-
 export const getProductDetail = (id) => async (dispatch) => {
   try {
     dispatch({
@@ -56,6 +55,61 @@ export const createNewReview = (review) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: types.NEW_REVIEW_FAIL,
+      payload: error.response.data.error,
+    });
+  }
+};
+
+//admin get all prodduct
+export const getAdminProducts = () => async (dispatch) => {
+  try {
+    dispatch({ type: types.ADMIN_PRODUCT_REQUEST });
+    const data = await axiosConfig.get("/admin/products");
+    dispatch({
+      type: types.ADMIN_PRODUCT_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: types.ADMIN_PRODUCT_FAIL,
+      payload: error.response.data.error,
+    });
+  }
+};
+
+//admin create new product
+export const createNewProduct = (newProduct) => async (dispatch) => {
+  try {
+    dispatch({
+      type: types.NEW_PRODUCT_REQUEST,
+    });
+    const data = await axiosConfig.post(`/admin/products/new`, newProduct);
+    dispatch({
+      type: types.NEW_PRODUCT_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: types.NEW_PRODUCT_FAIL,
+      payload: error.response.data.error,
+    });
+  }
+};
+
+//delete product admin
+export const deleteProductAdmin = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: types.DELETE_PRODUCT_REQUEST,
+    });
+    const data = await axiosConfig.delete(`/admin/products/${id}`);
+    dispatch({
+      type: types.DELETE_PRODUCT_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: types.DELETE_PRODUCT_FAIL,
       payload: error.response.data.error,
     });
   }
