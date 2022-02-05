@@ -115,6 +115,25 @@ export const deleteProductAdmin = (id) => async (dispatch) => {
   }
 };
 
+//admin update product
+export const updatedProduct = (id, productData) => async (dispatch) => {
+  try {
+    dispatch({
+      type: types.UPDATE_PRODUCT_REQUEST,
+    });
+    const data = await axiosConfig.put(`/admin/products/${id}`, productData);
+    dispatch({
+      type: types.UPDATE_PRODUCT_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: types.UPDATE_PRODUCT_FAIL,
+      payload: error.response.data.error,
+    });
+  }
+};
+
 export const clearErrors = () => async (dispatch) => {
   dispatch({ type: types.CLEAR_ERROR });
 };

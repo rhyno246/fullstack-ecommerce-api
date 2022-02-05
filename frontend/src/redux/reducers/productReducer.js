@@ -8,6 +8,7 @@ const initialState = {
   resultPerPage: 0,
   success: null,
   isDeleted: null,
+  isUpdated: null,
 };
 
 export const productReducer = (state = initialState, action) => {
@@ -86,6 +87,7 @@ export const productReducer = (state = initialState, action) => {
     //create,delete admin product
     case types.NEW_PRODUCT_REQUEST:
     case types.DELETE_PRODUCT_REQUEST:
+    case types.UPDATE_PRODUCT_REQUEST:
       return {
         ...state,
         loading: true,
@@ -102,13 +104,25 @@ export const productReducer = (state = initialState, action) => {
         loading: false,
         isDeleted: action.payload.success,
       };
+    case types.UPDATE_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isUpdated: action.payload.success,
+      };
 
     case types.NEW_PRODUCT_FAIL:
     case types.DELETE_PRODUCT_FAIL:
+    case types.UPDATE_PRODUCT_FAIL:
       return {
         ...state,
         loading: false,
         error: action.payload,
+      };
+    case types.UPDATE_PRODUCT_RESET:
+      return {
+        ...state,
+        isUpdated: false,
       };
     case types.DELETE_PRODUCT_RESET:
       return {
