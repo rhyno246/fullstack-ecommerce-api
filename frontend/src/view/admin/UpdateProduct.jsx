@@ -38,7 +38,7 @@ const UpdateProduct = () => {
   const { loading, error, isUpdated, product } = useSelector(
     (state) => state.products
   );
-  const [name, setName] = useState(product?.name);
+  const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
@@ -60,16 +60,6 @@ const UpdateProduct = () => {
   };
 
   useEffect(() => {
-    // if (product && product.id !== id) {
-    //   dispatch(getProductDetail(id));
-    // } else {
-    //   setName(product.name);
-    //   setDescription(product.description);
-    //   setPrice(product.price);
-    //   setCategory(product.category);
-    //   setStock(product.stock);
-    //   setOldImages(product.images);
-    // }
     if (error) {
       return alert.error(error);
     }
@@ -78,7 +68,31 @@ const UpdateProduct = () => {
       history.push("/admin/products");
       dispatch({ type: UPDATE_PRODUCT_RESET });
     }
-  }, [dispatch, id, error, alert, history, isUpdated]);
+    if (product?.id !== id) {
+      dispatch(getProductDetail(id));
+    } else {
+      setName(product.name);
+      setDescription(product.description);
+      setPrice(product.price);
+      setCategory(product.category);
+      setStock(product.stock);
+      setOldImages(product.images);
+    }
+  }, [
+    dispatch,
+    error,
+    alert,
+    history,
+    isUpdated,
+    id,
+    product.name,
+    product.id,
+    product.description,
+    product.price,
+    product.category,
+    product.stock,
+    product.images,
+  ]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
