@@ -46,13 +46,13 @@ export const mainListItems = (
       </ListItem>
     </NavLink>
 
-    <NavLink to="/admin/reviews">
+    {/* <NavLink to="/admin/reviews">
       <ListItem button>
         <ListItemIcon>
           <CommentIcon />
         </ListItemIcon>
         <ListItemText primary="Reviews" />
       </ListItem>
-    </NavLink>
+    </NavLink> */}
   </div>
 );

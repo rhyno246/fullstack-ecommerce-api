@@ -4,10 +4,11 @@ import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
-import { Button } from "@mui/material";
+import { Badge, Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Loader from "../../component/Loader";
 import { DataGrid } from "@mui/x-data-grid";
+import CommentIcon from "@mui/icons-material/Comment";
 import {
   clearErrors,
   deleteProductAdmin,
@@ -28,19 +29,41 @@ const Products = () => {
       minWidth: 350,
       flex: 1,
     },
-
+    {
+      field: "reviews",
+      headerName: "Reviews",
+      minWidth: 100,
+      flex: 1,
+      renderCell: (params) => {
+        return (
+          <>
+            <Link
+              to={`/admin/products/reviews/${params.id}`}
+              style={{
+                color: "#000",
+                display: params.value === 0 ? "none" : "block",
+              }}
+            >
+              <Badge badgeContent={params.value} color="primary">
+                <CommentIcon />
+              </Badge>
+            </Link>
+          </>
+        );
+      },
+    },
     {
       field: "stock",
       headerName: "Stock",
       type: "number",
-      minWidth: 150,
+      minWidth: 100,
       flex: 0.3,
     },
     {
       field: "price",
       headerName: "Price",
       type: "number",
-      minWidth: 270,
+      minWidth: 200,
       flex: 0.5,
     },
     {
@@ -79,6 +102,7 @@ const Products = () => {
         stock: item.stock,
         price: item.price,
         name: item.name,
+        reviews: item.reviews.length,
       });
     });
 

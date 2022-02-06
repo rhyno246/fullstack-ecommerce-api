@@ -109,18 +109,23 @@ function App() {
           path="/admin/orders/:id"
           component={EditOrder}
         />
-        <Route isAdmin={true} exact path="/admin/users" component={ListUsers} />
+        <ProtectedRoute
+          isAdmin={true}
+          exact
+          path="/admin/products/reviews/:id"
+          component={Reviews}
+        />
+        <ProtectedRoute
+          isAdmin={true}
+          exact
+          path="/admin/users"
+          component={ListUsers}
+        />
         <Route
           isAdmin={true}
           exact
           path="/admin/users/:id"
           component={UserDetails}
-        />
-        <ProtectedRoute
-          isAdmin={true}
-          exact
-          path="/admin/reviews"
-          component={Reviews}
         />
         <ProtectedRoute
           isAdmin={true}
