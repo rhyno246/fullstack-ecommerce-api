@@ -45,6 +45,54 @@ export const getOrderDetail = (id) => async (dispatch) => {
   }
 };
 
+//all order admin
+export const allAdminOrder = () => async (dispatch) => {
+  try {
+    dispatch({ type: types.ALL_ORDERS_REQUEST });
+    const data = await axiosConfig.get("/admin/orders");
+    if (data.success) {
+      dispatch({ type: types.ALL_ORDERS_SUCCESS, payload: data.orders });
+    }
+  } catch (error) {
+    dispatch({
+      type: types.ALL_ORDERS_FAIL,
+      payload: error.response.data.error,
+    });
+  }
+};
+//updated order
+export const updatedOrderAdmin = (id, order) => async (dispatch) => {
+  try {
+    dispatch({ type: types.UPDATE_ORDER_REQUEST });
+    const data = await axiosConfig.put(`/admin/orders/${id}`, order);
+    dispatch({ type: types.UPDATE_ORDER_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: types.UPDATE_ORDER_FAIL,
+      payload: error.response.data.error,
+    });
+  }
+};
+
+//deleted order
+export const deleteOrderAdmin = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: types.DELETE_ORDER_REQUEST,
+    });
+    const data = await axiosConfig.delete(`/admin/orders/${id}`);
+    dispatch({
+      type: types.DELETE_ORDER_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: types.DELETE_ORDER_FAIL,
+      payload: error.response.data.error,
+    });
+  }
+};
+
 export const clearErrors = () => async (dispatch) => {
   dispatch({ type: types.CLEAR_ERROR });
 };

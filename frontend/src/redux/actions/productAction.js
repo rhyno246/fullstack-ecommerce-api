@@ -134,6 +134,44 @@ export const updatedProduct = (id, productData) => async (dispatch) => {
   }
 };
 
+//get all review admin
+export const getAdminReviews = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: types.ALL_REVIEW_REQUEST });
+    const data = await axiosConfig.get(`/review?id=${id}`);
+    dispatch({
+      type: types.ALL_REVIEW_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: types.ALL_REVIEW_FAIL,
+      payload: error.response.data.error,
+    });
+  }
+};
+
+// Delete Review of a Product
+export const deleteReviews = (reviewId, productId) => async (dispatch) => {
+  try {
+    dispatch({ type: types.DELETE_REVIEW_REQUEST });
+
+    const data = await axiosConfig.delete(
+      `/reviews?id=${reviewId}&productId=${productId}`
+    );
+
+    dispatch({
+      type: types.DELETE_REVIEW_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: types.DELETE_REVIEW_FAIL,
+      payload: error.response.data.error,
+    });
+  }
+};
+
 export const clearErrors = () => async (dispatch) => {
   dispatch({ type: types.CLEAR_ERROR });
 };

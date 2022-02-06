@@ -9,6 +9,7 @@ const initialState = {
   success: null,
   isDeleted: null,
   isUpdated: null,
+  reviewsAdmin: [],
 };
 
 export const productReducer = (state = initialState, action) => {
@@ -130,6 +131,38 @@ export const productReducer = (state = initialState, action) => {
         isDeleted: false,
       };
     case types.NEW_PRODUCT_RESET:
+      return {
+        ...state,
+        success: false,
+      };
+
+    //admin get and delete reviews
+    case types.ALL_REVIEW_REQUEST:
+    case types.DELETE_REVIEW_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case types.ALL_REVIEW_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        reviewsAdmin: action.payload.reviews,
+      };
+    case types.DELETE_REVIEW_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isDeleted: action.payload.success,
+      };
+    case types.ALL_REVIEW_FAIL:
+    case types.DELETE_REVIEW_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case types.DELETE_REVIEW_RESET:
       return {
         ...state,
         success: false,

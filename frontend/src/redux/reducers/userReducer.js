@@ -6,8 +6,11 @@ const initialState = {
   error: null,
   token: null,
   isUpdated: null,
+  isDeleted: null,
   success: null,
   message: "",
+  allUsersAdmin: [],
+  userAdminDetail: {},
 };
 
 export const userReducer = (state = initialState, action) => {
@@ -54,6 +57,8 @@ export const userReducer = (state = initialState, action) => {
     //profile
     case types.UPDATE_PROFILE_REQUEST:
     case types.UPDATE_PASSWORD_REQUEST:
+    case types.UPDATE_USER_REQUEST:
+    case types.DELETE_USER_REQUEST:
       return {
         ...state,
         loading: true,
@@ -65,8 +70,23 @@ export const userReducer = (state = initialState, action) => {
         loading: false,
         isUpdated: action.payload,
       };
+
+    case types.UPDATE_USER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isUpdated: action.payload.success,
+      };
+    case types.DELETE_USER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isDeleted: action.payload.success,
+      };
     case types.UPDATE_PROFILE_FAIL:
     case types.UPDATE_PASSWORD_FAIL:
+    case types.UPDATE_USER_FAIL:
+    case types.DELETE_USER_FAIL:
       return {
         ...state,
         loading: false,
@@ -74,9 +94,15 @@ export const userReducer = (state = initialState, action) => {
       };
     case types.UPDATE_PROFILE_RESET:
     case types.UPDATE_PASSWORD_RESET:
+    case types.UPDATE_USER_RESET:
       return {
         ...state,
         isUpdated: false,
+      };
+    case types.DELETE_USER_RESET:
+      return {
+        ...state,
+        isDeleted: false,
       };
 
     //forgot & reset pass
@@ -112,6 +138,35 @@ export const userReducer = (state = initialState, action) => {
         loading: false,
         message: "",
       };
+
+    //user admin
+    case types.ADMIN_USERS_REQUEST:
+    case types.USER_DETAILS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case types.ADMIN_USERS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        allUsersAdmin: action.payload.users,
+      };
+    case types.USER_DETAILS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        userAdminDetail: action.payload.user,
+      };
+    case types.ADMIN_USERS_FAIL:
+    case types.USER_DETAILS_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
+    //clear
     case types.CLEAR_ERROR:
       return {
         ...state,

@@ -48,6 +48,8 @@ const UpdateProduct = () => {
 
   const updateImage = (e) => {
     const files = Array.from(e.target.files);
+    setImages([]);
+    setOldImages([]);
     files.forEach((file) => {
       const reader = new FileReader();
       reader.onload = () => {
@@ -59,15 +61,31 @@ const UpdateProduct = () => {
     });
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (
+      name === "" ||
+      price === "" ||
+      description === "" ||
+      category === "" ||
+      stock === ""
+    ) {
+      alert.error("Feild is required");
+      return;
+    }
+    const myForm = new FormData();
+    myForm.set("name", name);
+    myForm.set("price", price);
+    myForm.set("description", description);
+    myForm.set("category", category);
+    myForm.set("stock", stock);
+    images.forEach((images) => {
+      myForm.append("images", images);
+    });
+    dispatch(updatedProduct(id, myForm));
+  };
+
   useEffect(() => {
-    if (error) {
-      return alert.error(error);
-    }
-    if (isUpdated) {
-      alert.success("Product Updated Successfully");
-      history.push("/admin/products");
-      dispatch({ type: UPDATE_PRODUCT_RESET });
-    }
     if (product?.id !== id) {
       dispatch(getProductDetail(id));
     } else {
@@ -77,6 +95,15 @@ const UpdateProduct = () => {
       setCategory(product.category);
       setStock(product.stock);
       setOldImages(product.images);
+    }
+    if (error) {
+      return alert.error(error);
+    }
+    if (isUpdated) {
+      alert.success("Product Updated Successfully");
+      history.push("/admin/products");
+      dispatch(getProductDetail(id));
+      dispatch({ type: UPDATE_PRODUCT_RESET });
     }
   }, [
     dispatch,
@@ -93,34 +120,6 @@ const UpdateProduct = () => {
     product.stock,
     product.images,
   ]);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (
-      name === "" ||
-      price === "" ||
-      description === "" ||
-      category === "" ||
-      stock === "" ||
-      images.length === 0
-    ) {
-      alert.error("Feild is required");
-      return;
-    }
-    const myForm = new FormData();
-    myForm.set("name", name);
-    myForm.set("price", price);
-    myForm.set("description", description);
-    myForm.set("category", category);
-    myForm.set("stock", stock);
-
-    images.forEach((images) => {
-      myForm.append("images", images);
-    });
-    dispatch(updatedProduct(id, myForm));
-  };
-
-  console.log(product);
   return (
     <Layout title={`Update - ${product?.name}`}>
       {loading ? (

@@ -31,10 +31,12 @@ import OrderSuccess from "./view/OrderSuccess";
 import OrderDetail from "./view/OrderDetail";
 import Products from "./view/admin/Products";
 import Orders from "./view/admin/Orders";
-import Users from "./view/admin/Users";
+import ListUsers from "./view/admin/ListUsers";
 import Reviews from "./view/admin/Reviews";
 import AddNewProduct from "./view/admin/AddNewProduct";
 import UpdateProduct from "./view/admin/UpdateProduct";
+import EditOrder from "./view/admin/EditOrder";
+import UserDetails from "./view/admin/UserDetails";
 function App() {
   const [stripeApiKey, setStripeApiKey] = useState("");
 
@@ -104,8 +106,15 @@ function App() {
         <ProtectedRoute
           isAdmin={true}
           exact
-          path="/admin/users"
-          component={Users}
+          path="/admin/orders/:id"
+          component={EditOrder}
+        />
+        <Route isAdmin={true} exact path="/admin/users" component={ListUsers} />
+        <Route
+          isAdmin={true}
+          exact
+          path="/admin/users/:id"
+          component={UserDetails}
         />
         <ProtectedRoute
           isAdmin={true}
@@ -125,10 +134,12 @@ function App() {
           path="/admin/product/:id"
           component={UpdateProduct}
         />
-
         <ProtectedRoute exact path="/success" component={OrderSuccess} />
-
-        <Route path="*" component={NotFound} />
+        <Route
+          component={
+            window.location.pathname === "/process/payment" ? null : NotFound
+          }
+        />
       </Switch>
     </Router>
   );

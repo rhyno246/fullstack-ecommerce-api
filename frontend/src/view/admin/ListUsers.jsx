@@ -1,71 +1,69 @@
-import React from "react";
-import { useEffect } from "react";
+import { Button } from "@mui/material";
+import React, { useEffect } from "react";
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
-  allAdminOrder,
+  allUserAdmin,
   clearErrors,
-  deleteOrderAdmin,
-} from "../../redux/actions/orderAction";
+  deleteUser,
+} from "../../redux/actions/userAction";
 import Layout from "./Layout";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import { Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import Loader from "../../component/Loader";
-import { DELETE_ORDER_RESET } from "../../redux/types";
+import { DELETE_USER_RESET } from "../../redux/types";
 
-const Orders = () => {
+const ListUsers = () => {
   const dispatch = useDispatch();
   const alert = useAlert();
-  const { allOrderAdmin, error, isDeleted, loading } = useSelector(
-    (state) => state.order
+  const { error, allUsersAdmin, loading, isDeleted } = useSelector(
+    (state) => state.user
   );
-
-  const deleteOrderHandler = (id) => {
-    dispatch(deleteOrderAdmin(id));
-  };
-
   useEffect(() => {
-    dispatch(allAdminOrder());
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
     if (isDeleted) {
-      alert.success("Order Deleted Successfully");
-      dispatch({ type: DELETE_ORDER_RESET });
+      alert.success("Delete user successfully");
+      dispatch({ type: DELETE_USER_RESET });
     }
+    dispatch(allUserAdmin());
   }, [dispatch, alert, error, isDeleted]);
 
+  const deleteUserHandler = (id) => {
+    dispatch(deleteUser(id));
+  };
+
   const columns = [
-    { field: "id", headerName: "Order ID", minWidth: 300, flex: 1 },
+    { field: "id", headerName: "User ID", minWidth: 180, flex: 0.8 },
+
     {
-      field: "status",
-      headerName: "Status",
+      field: "email",
+      headerName: "Email",
+      minWidth: 200,
+      flex: 1,
+    },
+    {
+      field: "name",
+      headerName: "Name",
       minWidth: 150,
       flex: 0.5,
+    },
+
+    {
+      field: "role",
+      headerName: "Role",
+      type: "number",
+      minWidth: 150,
+      flex: 0.3,
       cellClassName: (params) => {
-        return params.formattedValue === "Delivered"
-          ? "greenColor"
-          : "redColor";
+        return params.formattedValue === "admin" ? "greenColor" : "redColor";
       },
     },
-    {
-      field: "itemsQty",
-      headerName: "Items Qty",
-      type: "number",
-      minWidth: 150,
-      flex: 0.4,
-    },
-    {
-      field: "amount",
-      headerName: "Amount",
-      type: "number",
-      minWidth: 270,
-      flex: 0.5,
-    },
+
     {
       field: "actions",
       flex: 0.3,
@@ -76,14 +74,11 @@ const Orders = () => {
       renderCell: (params) => {
         return (
           <>
-            <Link
-              to={`/admin/orders/${params.id}`}
-              style={{ color: "#1976d2" }}
-            >
+            <Link to={`/admin/users/${params.id}`} style={{ color: "#1976d2" }}>
               <EditIcon />
             </Link>
 
-            <Button onClick={() => deleteOrderHandler(params.id)}>
+            <Button onClick={() => deleteUserHandler(params.id)}>
               <DeleteIcon />
             </Button>
           </>
@@ -92,18 +87,18 @@ const Orders = () => {
     },
   ];
   const rows = [];
-  allOrderAdmin &&
-    allOrderAdmin.forEach((item) => {
+  allUsersAdmin &&
+    allUsersAdmin.forEach((item) => {
       rows.push({
-        id: item._id,
-        itemsQty: item.orderItems.length,
-        amount: item.totalPrice,
-        status: item.orderStatus,
+        id: item.id,
+        role: item.role,
+        email: item.email,
+        name: item.name,
       });
     });
 
   return (
-    <Layout title="Orders">
+    <Layout title="Users">
       {loading ? (
         <Loader />
       ) : (
@@ -122,4 +117,4 @@ const Orders = () => {
   );
 };
 
-export default Orders;
+export default ListUsers;

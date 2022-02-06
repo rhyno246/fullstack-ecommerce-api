@@ -27,7 +27,7 @@ const Product = () => {
   const query = useQuery();
   const keyword = query.get("keyword");
   const [currentPage, setCurrentPage] = useState(1);
-  const [price, setPrice] = useState([0, 1000]);
+  const [price, setPrice] = useState([0, 10000]);
   const [category, setCategory] = useState("");
   const [ratings, setRatings] = useState(0);
   const handlePrice = (e, newPrice) => {
@@ -75,7 +75,7 @@ const Product = () => {
                   onChange={handlePrice}
                   valueLabelDisplay="on"
                   min={0}
-                  max={1000}
+                  max={10000}
                 />
               </div>
               <div className="category">

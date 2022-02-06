@@ -9,8 +9,10 @@ import { Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import { useDispatch, useSelector } from "react-redux";
 import { getAdminProducts } from "../../redux/actions/productAction";
+import { allAdminOrder } from "../../redux/actions/orderAction";
 const Dashboard = () => {
   const { products } = useSelector((state) => state.products);
+  const { allOrderAdmin } = useSelector((state) => state.order);
   const dispatch = useDispatch();
 
   let outOfStock = 0;
@@ -63,6 +65,7 @@ const Dashboard = () => {
   };
   useEffect(() => {
     dispatch(getAdminProducts());
+    dispatch(allAdminOrder());
   }, [dispatch]);
   return (
     <Layout title="Dashboard">
@@ -98,7 +101,7 @@ const Dashboard = () => {
                   <ShoppingCartIcon />
                 </div>
                 <div className="heading">Total Orders</div>
-                <div className="total-number">20</div>
+                <div className="total-number">{allOrderAdmin?.length}</div>
               </div>
             </Box>
           </Grid>
