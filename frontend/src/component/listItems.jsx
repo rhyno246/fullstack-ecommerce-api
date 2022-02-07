@@ -6,7 +6,6 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import PeopleIcon from "@mui/icons-material/People";
 import LayersIcon from "@mui/icons-material/Layers";
-import CommentIcon from "@mui/icons-material/Comment";
 import { NavLink } from "react-router-dom";
 export const mainListItems = (
   <div className="dashboard-menu">

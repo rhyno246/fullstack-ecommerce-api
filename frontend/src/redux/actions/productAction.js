@@ -157,7 +157,7 @@ export const deleteReviews = (reviewId, productId) => async (dispatch) => {
     dispatch({ type: types.DELETE_REVIEW_REQUEST });
 
     const data = await axiosConfig.delete(
-      `/reviews?id=${reviewId}&productId=${productId}`
+      `/review?id=${reviewId}&productId=${productId}`
     );
 
     dispatch({

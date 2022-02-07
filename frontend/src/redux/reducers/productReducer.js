@@ -9,6 +9,7 @@ const initialState = {
   success: null,
   isDeleted: null,
   isUpdated: null,
+  isReviewsDeleted: null,
   reviewsAdmin: [],
 };
 
@@ -153,7 +154,7 @@ export const productReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        isDeleted: action.payload.success,
+        isReviewsDeleted: action.payload.success,
       };
     case types.ALL_REVIEW_FAIL:
     case types.DELETE_REVIEW_FAIL:
