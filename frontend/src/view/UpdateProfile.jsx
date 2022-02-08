@@ -21,6 +21,7 @@ const UpdateProfile = () => {
     (state) => state.user
   );
   const [avatar, setAvatar] = useState("");
+  const [imgReview, setImgReview] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 
@@ -28,7 +29,8 @@ const UpdateProfile = () => {
   const dispatch = useDispatch();
   const updateImage = (e) => {
     const reader = new FileReader();
-
+    setImgReview("")
+    setAvatar("")
     reader.onload = () => {
       if (reader.readyState === 2) {
         setAvatar(reader.result);
@@ -36,6 +38,7 @@ const UpdateProfile = () => {
     };
     reader.readAsDataURL(e.target.files[0]);
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const myForm = new FormData();
@@ -49,7 +52,7 @@ const UpdateProfile = () => {
     if (users) {
       setName(users?.name);
       setEmail(users?.email);
-      setAvatar(users?.avatar?.url);
+      setImgReview(users?.avatar);
     }
     if (error) {
       alert.error(error);
@@ -119,7 +122,8 @@ const UpdateProfile = () => {
                   onChange={updateImage}
                 />
               </Button>
-              <Avatar src={avatar} sx={{ marginLeft: "10px" }} />
+              { imgReview && <Avatar src={imgReview?.url} sx={{ marginLeft: "10px" }} /> }
+              { avatar && <Avatar src={avatar} sx={{ marginLeft: "10px" }} /> }
             </div>
             <Button
               type="submit"

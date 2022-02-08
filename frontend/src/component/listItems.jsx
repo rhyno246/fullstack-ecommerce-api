@@ -7,6 +7,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import PeopleIcon from "@mui/icons-material/People";
 import LayersIcon from "@mui/icons-material/Layers";
 import { NavLink } from "react-router-dom";
+import ViewCarouselIcon from '@mui/icons-material/ViewCarousel';
 export const mainListItems = (
   <div className="dashboard-menu">
     <NavLink exact to="/admin/dashboard">
@@ -45,13 +46,13 @@ export const mainListItems = (
       </ListItem>
     </NavLink>
 
-    {/* <NavLink to="/admin/reviews">
+    <NavLink to="/admin/slider">
       <ListItem button>
         <ListItemIcon>
-          <CommentIcon />
+          <ViewCarouselIcon />
         </ListItemIcon>
-        <ListItemText primary="Reviews" />
+        <ListItemText primary="Slider" />
       </ListItem>
-    </NavLink> */}
+    </NavLink>
   </div>
 );

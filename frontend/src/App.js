@@ -37,6 +37,7 @@ import AddNewProduct from "./view/admin/AddNewProduct";
 import UpdateProduct from "./view/admin/UpdateProduct";
 import EditOrder from "./view/admin/EditOrder";
 import UserDetails from "./view/admin/UserDetails";
+import SlideShow from "./view/admin/SlideShow";
 function App() {
   const [stripeApiKey, setStripeApiKey] = useState("");
 
@@ -139,6 +140,14 @@ function App() {
           path="/admin/product/:id"
           component={UpdateProduct}
         />
+
+        <ProtectedRoute
+          isAdmin={true}
+          exact
+          path="/admin/slider"
+          component={SlideShow}
+        />
+
         <ProtectedRoute exact path="/success" component={OrderSuccess} />
         <Route
           component={

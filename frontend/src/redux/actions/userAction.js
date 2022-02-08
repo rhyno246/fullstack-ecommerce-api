@@ -11,6 +11,7 @@ export const loadUser = () => async (dispatch) => {
       type: types.LOAD_USER_SUCCESS,
       payload: data,
     });
+    localStorage.setItem("users", JSON.stringify(data));
   } catch (error) {
     dispatch({
       type: types.LOAD_USER_FAIL,
@@ -30,6 +31,7 @@ export const login = (email, password) => async (dispatch) => {
     });
     if (data.success) {
       localStorage.setItem("token", data.token);
+      localStorage.setItem("users", JSON.stringify(data));
       dispatch({
         type: types.LOGIN_SUCCESS,
         payload: data,
@@ -51,6 +53,7 @@ export const register = (userData) => async (dispatch) => {
     const data = await axiosConfig.post("/register", userData);
     if (data.success) {
       localStorage.setItem("token", data.token);
+      localStorage.setItem("users", JSON.stringify(data));
       dispatch({
         type: types.REGISTER_SUCCESS,
         payload: data,

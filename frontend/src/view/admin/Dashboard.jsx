@@ -10,11 +10,12 @@ import { Box } from "@mui/system";
 import { useDispatch, useSelector } from "react-redux";
 import { getAdminProducts } from "../../redux/actions/productAction";
 import { allAdminOrder } from "../../redux/actions/orderAction";
+import { allUserAdmin } from "../../redux/actions/userAction";
 const Dashboard = () => {
   const { products } = useSelector((state) => state.products);
   const { allOrderAdmin } = useSelector((state) => state.order);
+  const { allUsersAdmin } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-
   let outOfStock = 0;
   products &&
     products.forEach((item) => {
@@ -66,6 +67,7 @@ const Dashboard = () => {
   useEffect(() => {
     dispatch(getAdminProducts());
     dispatch(allAdminOrder());
+    dispatch(allUserAdmin())
   }, [dispatch]);
   return (
     <Layout title="Dashboard">
@@ -78,7 +80,7 @@ const Dashboard = () => {
                   <GroupIcon />
                 </div>
                 <div className="heading">Total Users</div>
-                <div className="total-number">20</div>
+                <div className="total-number">{ allUsersAdmin?.length }</div>
               </div>
             </Box>
           </Grid>

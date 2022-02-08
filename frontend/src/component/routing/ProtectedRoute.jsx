@@ -5,21 +5,22 @@ import Loader from "../Loader";
 
 const ProtectedRoute = ({ isAdmin, component: Component, ...rest }) => {
   const token = localStorage.getItem("token");
-  const { isAuthenticated, users, loading } = useSelector(
-    (state) => state.user
-  );
-  if (loading) {
-    return <Loader />;
-  }
+  const users = JSON.parse(localStorage.getItem("users"))
+  // const { isAuthenticated, users,  loading } = useSelector(
+  //   (state) => state.user
+  // );
+  // if (loading) {
+  //   return <Loader />;
+  // }
   return (
     <>
       <Route
         {...rest}
         render={(props) => {
-          if (!token && !isAuthenticated) {
+          if (!token) {
             return <Redirect to="/login" />;
           }
-          if (isAdmin === true && users?.role === "user") {
+          if (isAdmin === true && users?.user?.role === "user") {
             return <Redirect to="/profile" />;
           }
           return <Component {...props} {...rest} />;

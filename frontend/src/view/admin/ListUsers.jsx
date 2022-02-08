@@ -60,7 +60,7 @@ const ListUsers = () => {
       minWidth: 150,
       flex: 0.3,
       cellClassName: (params) => {
-        return params.formattedValue === "admin" ? "greenColor" : "redColor";
+        return params.formattedValue === "admin" ? "greenColor" : "purpleColor";
       },
     },
 
@@ -74,13 +74,12 @@ const ListUsers = () => {
       renderCell: (params) => {
         return (
           <>
-            <Link to={`/admin/users/${params.id}`} style={{ color: "#1976d2" }}>
+            {params.row.role === "user" && <Link to={`/admin/users/${params.id}`} style={{ color: "#1976d2" }}>
               <EditIcon />
-            </Link>
-
-            <Button onClick={() => deleteUserHandler(params.id)}>
+            </Link>}
+            {params.row.role === "user" && <Button onClick={() => deleteUserHandler(params.id)}>
               <DeleteIcon />
-            </Button>
+            </Button>}
           </>
         );
       },
