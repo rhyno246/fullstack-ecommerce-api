@@ -43,6 +43,12 @@ export const bannerReducer = (state = initialState, action) => {
         loading: false,
         isUpdated: action.payload.success,
       };
+    case types.DELETE_SLIDER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isDeleted: action.payload.success,
+      };
 
     case types.ALL_SLIDER_FAIL:
     case types.CREATE_SLIDER_FAIL:
@@ -62,6 +68,11 @@ export const bannerReducer = (state = initialState, action) => {
       return {
         ...state,
         isUpdated: false,
+      };
+    case types.DELETE_SLIDER_RESET:
+      return {
+        ...state,
+        isDeleted: false,
       };
     //clear
     case types.CLEAR_ERROR:

@@ -71,6 +71,22 @@ export const updateAdminSlider = (id, updateData) => async (dispatch) => {
   }
 };
 
+export const deleteAdminSlider = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: types.DELETE_SLIDER_REQUEST });
+    const data = await axiosConfig.delete(`/admin/slider/${id}`);
+    dispatch({
+      type: types.DELETE_SLIDER_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: types.DELETE_SLIDER_FAIL,
+      payload: error.response.data.error,
+    });
+  }
+};
+
 export const clearErrors = () => async (dispatch) => {
   dispatch({ type: types.CLEAR_ERROR });
 };

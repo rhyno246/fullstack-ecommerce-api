@@ -7,7 +7,11 @@ import { Link } from "react-router-dom";
 import { useAlert } from "react-alert";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { clearErrors, getAllSlider } from "../../redux/actions/bannerAction";
+import {
+  clearErrors,
+  deleteAdminSlider,
+  getAllSlider,
+} from "../../redux/actions/bannerAction";
 import { DELETE_SLIDER_RESET } from "../../redux/types";
 import Loader from "../../component/Loader";
 const SlideShow = () => {
@@ -16,6 +20,11 @@ const SlideShow = () => {
   const { sliders, loading, error, isDeleted } = useSelector(
     (state) => state.banner
   );
+
+  const handleDeleteSlider = (id) => {
+    dispatch(deleteAdminSlider(id));
+  };
+
   const columns = [
     { field: "id", headerName: "Slider ID", minWidth: 200, flex: 0.5 },
     {
@@ -63,7 +72,7 @@ const SlideShow = () => {
             >
               <EditIcon />
             </Link>
-            <Button>
+            <Button onClick={() => handleDeleteSlider(params.id)}>
               <DeleteIcon />
             </Button>
           </>

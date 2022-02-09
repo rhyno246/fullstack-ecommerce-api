@@ -46,7 +46,13 @@ exports.getDetailSlider = catchAsynchErrors(async (req, res, next) => {
 
 //delete slider
 exports.deleteSlider = catchAsynchErrors(async (req, res, next) => {
-  let slider = await Sliders.findById(req.params.id);
+  const slider = await Sliders.findById(req.params.id);
+  if (!slider) {
+    return next(new ErrorHandler("Product not found", 404));
+  }
+  const imageId = slider.image.public_id;
+  await cloudinary.v2.uploader.destroy(imageId);
+  await slider.remove();
   res
     .status(200)
     .json({ success: true, message: "Delete Slider Successfully" });

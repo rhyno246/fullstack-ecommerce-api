@@ -5,12 +5,13 @@ import LayersIcon from "@mui/icons-material/Layers";
 import CommentIcon from "@mui/icons-material/Comment";
 import Layout from "./Layout";
 import Chart from "react-apexcharts";
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useDispatch, useSelector } from "react-redux";
 import { getAdminProducts } from "../../redux/actions/productAction";
 import { allAdminOrder } from "../../redux/actions/orderAction";
 import { allUserAdmin } from "../../redux/actions/userAction";
+import { DataGrid } from "@mui/x-data-grid";
 const Dashboard = () => {
   const { products } = useSelector((state) => state.products);
   const { allOrderAdmin } = useSelector((state) => state.order);
@@ -64,10 +65,56 @@ const Dashboard = () => {
       },
     },
   };
+
+  const columns = [
+    { field: "id", headerName: "Order ID", minWidth: 300, flex: 1 },
+    {
+      field: "status",
+      headerName: "Status",
+      minWidth: 150,
+      flex: 0.5,
+      cellClassName: (params) => {
+        return params.formattedValue === "Delivered"
+          ? "greenColor"
+          : "redColor";
+      },
+    },
+    {
+      field: "itemsQty",
+      headerName: "Items Qty",
+      type: "number",
+      minWidth: 150,
+      flex: 0.4,
+    },
+    {
+      field: "amount",
+      headerName: "Amount",
+      type: "number",
+      minWidth: 270,
+      flex: 0.5,
+    },
+  ];
+
+  const rows = [];
+  allOrderAdmin &&
+    allOrderAdmin.forEach((item) => {
+      rows.push({
+        id: item._id,
+        itemsQty: item.orderItems.length,
+        amount: item.totalPrice,
+        status: item.orderStatus,
+      });
+    });
+  let totalAmount = 0;
+  allOrderAdmin &&
+    allOrderAdmin.forEach((item) => {
+      totalAmount += item.totalPrice;
+    });
+
   useEffect(() => {
     dispatch(getAdminProducts());
     dispatch(allAdminOrder());
-    dispatch(allUserAdmin())
+    dispatch(allUserAdmin());
   }, [dispatch]);
   return (
     <Layout title="Dashboard">
@@ -80,7 +127,7 @@ const Dashboard = () => {
                   <GroupIcon />
                 </div>
                 <div className="heading">Total Users</div>
-                <div className="total-number">{ allUsersAdmin?.length }</div>
+                <div className="total-number">{allUsersAdmin?.length}</div>
               </div>
             </Box>
           </Grid>
@@ -146,6 +193,21 @@ const Dashboard = () => {
           />
         </Grid>
       </Grid>
+      <div className="order">
+        <Typography variant="h5" component="h5" sx={{ marginTop: 3 }}>
+          Total Amount : ${totalAmount}
+        </Typography>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          pageSize={10}
+          rowsPerPageOptions={[10]}
+          disableSelectionOnClick
+          className="myOrdersTable"
+          autoHeight
+          sx={{ marginTop: 1 }}
+        />
+      </div>
     </Layout>
   );
 };
