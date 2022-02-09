@@ -1,8 +1,8 @@
 import * as types from "../types";
 const initialState = {
   users: localStorage.getItem("users")
-  ? JSON.parse(localStorage.getItem("users"))
-  : null,
+    ? JSON.parse(localStorage.getItem("users"))
+    : null,
   loading: false,
   isAuthenticated: false,
   error: null,

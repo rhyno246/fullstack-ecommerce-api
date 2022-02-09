@@ -1,11 +1,11 @@
 import React from "react";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import { Redirect, Route } from "react-router-dom";
-import Loader from "../Loader";
+// import Loader from "../Loader";
 
 const ProtectedRoute = ({ isAdmin, component: Component, ...rest }) => {
   const token = localStorage.getItem("token");
-  const users = JSON.parse(localStorage.getItem("users"))
+  const users = JSON.parse(localStorage.getItem("users"));
   // const { isAuthenticated, users,  loading } = useSelector(
   //   (state) => state.user
   // );

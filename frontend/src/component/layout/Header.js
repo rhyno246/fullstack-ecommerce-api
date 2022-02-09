@@ -118,6 +118,12 @@ const Header = () => {
 
   const history = useHistory();
   const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    history.push("/");
+  };
+
   const actions = [
     {
       icon: <PersonIcon onClick={() => history.push("/profile")} />,
@@ -128,7 +134,7 @@ const Header = () => {
       name: "Orders",
     },
     {
-      icon: <LogoutIcon onClick={() => dispatch(logout())} />,
+      icon: <LogoutIcon onClick={handleLogout} />,
       name: "Logout",
     },
   ];

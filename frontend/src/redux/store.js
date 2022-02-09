@@ -5,11 +5,13 @@ import { productReducer } from "./reducers/productReducer";
 import { userReducer } from "./reducers/userReducer";
 import { cartReducer } from "./reducers/cartReducer";
 import { orderReducer } from "./reducers/orderReducer";
+import { bannerReducer } from "./reducers/bannerReducer";
 const reducer = combineReducers({
   products: productReducer,
   user: userReducer,
   cart: cartReducer,
   order: orderReducer,
+  banner: bannerReducer,
 });
 let initialState = {};
 const middleware = [thunk];

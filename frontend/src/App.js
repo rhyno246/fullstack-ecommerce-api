@@ -38,6 +38,8 @@ import UpdateProduct from "./view/admin/UpdateProduct";
 import EditOrder from "./view/admin/EditOrder";
 import UserDetails from "./view/admin/UserDetails";
 import SlideShow from "./view/admin/SlideShow";
+import AddNewSlider from "./view/admin/AddNewSlider";
+import SlideShowDetail from "./view/admin/SlideShowDetail";
 function App() {
   const [stripeApiKey, setStripeApiKey] = useState("");
 
@@ -78,7 +80,7 @@ function App() {
         <ProtectedRoute exact path="/shipping" component={Shipping} />
         <ProtectedRoute exact path="/profile" component={Profile} />
         <ProtectedRoute exact path="/order" component={Order} />
-        <ProtectedRoute exact path="/order/:id" component={OrderDetail} />
+        <ProtectedRoute exact path="/c/:id" component={OrderDetail} />
         <ProtectedRoute exact path="/me/update" component={UpdateProfile} />
 
         <ProtectedRoute
@@ -146,6 +148,18 @@ function App() {
           exact
           path="/admin/slider"
           component={SlideShow}
+        />
+        <ProtectedRoute
+          isAdmin={true}
+          exact
+          path="/admin/slider/new"
+          component={AddNewSlider}
+        />
+        <ProtectedRoute
+          isAdmin={true}
+          exact
+          path="/admin/slider/:id"
+          component={SlideShowDetail}
         />
 
         <ProtectedRoute exact path="/success" component={OrderSuccess} />
