@@ -206,7 +206,7 @@ const Header = () => {
               sx={{
                 position: "absolute",
                 top: { md: "22px", xs: "18px" },
-                right: 320,
+                right: { md: 320, xs: 300 },
               }}
             >
               <ShoppingCartIcon sx={{ color: "#fff" }} />

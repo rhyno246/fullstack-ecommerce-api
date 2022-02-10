@@ -40,22 +40,26 @@ import UserDetails from "./view/admin/UserDetails";
 import SlideShow from "./view/admin/SlideShow";
 import AddNewSlider from "./view/admin/AddNewSlider";
 import SlideShowDetail from "./view/admin/SlideShowDetail";
+import ContactAdmin from "./view/admin/ContactAdmin";
+import CategoryAdmin from "./view/admin/CategoryAdmin";
 function App() {
   const [stripeApiKey, setStripeApiKey] = useState("");
-
   async function getStripeApiKey() {
     const data = await axiosConfig.get("/stripeapikey");
     setStripeApiKey(data.stripeApiKey);
   }
+  const users = JSON.parse(localStorage.getItem("users"));
   useEffect(() => {
     WebFont.load({
       google: {
         families: ["Roboto", "Droid Sans", "Chilanka"],
       },
     });
-    store.dispatch(loadUser());
-    getStripeApiKey();
-  }, []);
+    if (users) {
+      store.dispatch(loadUser());
+      getStripeApiKey();
+    }
+  }, [users]);
 
   return (
     <Router>
@@ -80,7 +84,7 @@ function App() {
         <ProtectedRoute exact path="/shipping" component={Shipping} />
         <ProtectedRoute exact path="/profile" component={Profile} />
         <ProtectedRoute exact path="/order" component={Order} />
-        <ProtectedRoute exact path="/c/:id" component={OrderDetail} />
+        <ProtectedRoute exact path="/order/:id" component={OrderDetail} />
         <ProtectedRoute exact path="/me/update" component={UpdateProfile} />
 
         <ProtectedRoute
@@ -160,6 +164,20 @@ function App() {
           exact
           path="/admin/slider/:id"
           component={SlideShowDetail}
+        />
+
+        <ProtectedRoute
+          isAdmin={true}
+          exact
+          path="/admin/contact"
+          component={ContactAdmin}
+        />
+
+        <ProtectedRoute
+          isAdmin={true}
+          exact
+          path="/admin/category"
+          component={CategoryAdmin}
         />
 
         <ProtectedRoute exact path="/success" component={OrderSuccess} />

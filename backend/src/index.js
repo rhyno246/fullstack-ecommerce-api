@@ -6,7 +6,8 @@ const productRouter = require("./routes/productRoute");
 const userRouter = require("./routes/userRoute");
 const orderRouter = require("./routes/orderRoute");
 const paymentRouter = require("./routes/paymentRoute");
-const sliderRouter = require('./routes/sliderRoute');
+const sliderRouter = require("./routes/sliderRoute");
+const contactRouter = require("./routes/contactRoute");
 const errorMiddleware = require("./middleware/error");
 const cloudinary = require("cloudinary");
 const fileupload = require("express-fileupload");
@@ -42,7 +43,8 @@ app.use("/api/v1", productRouter);
 app.use("/api/v1", userRouter);
 app.use("/api/v1", orderRouter);
 app.use("/api/v1", paymentRouter);
-app.use("/api/v1", sliderRouter)
+app.use("/api/v1", sliderRouter);
+app.use("/api/v1", contactRouter);
 app.use(errorMiddleware);
 
 const PORT = process.env.PORT || 5000;

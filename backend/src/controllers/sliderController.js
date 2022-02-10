@@ -17,7 +17,7 @@ exports.createSlider = catchAsynchErrors(async (req, res, next) => {
   }
   const myCloud = await cloudinary.v2.uploader.upload(req.body.image, {
     folder: "sliders",
-    width: 150,
+    width: 1100,
     crop: "scale",
   });
   const slider = await Sliders.create({
@@ -69,7 +69,7 @@ exports.updateSlider = catchAsynchErrors(async (req, res, next) => {
   await cloudinary.v2.uploader.destroy(sliderId);
   const myCloud = await cloudinary.v2.uploader.upload(req.body.image, {
     folder: "sliders",
-    width: 150,
+    width: 1100,
     crop: "scale",
   });
   newSlider.image = {

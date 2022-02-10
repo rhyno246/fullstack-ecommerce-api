@@ -12,10 +12,12 @@ import { getAdminProducts } from "../../redux/actions/productAction";
 import { allAdminOrder } from "../../redux/actions/orderAction";
 import { allUserAdmin } from "../../redux/actions/userAction";
 import { DataGrid } from "@mui/x-data-grid";
+import { getAllContact } from "../../redux/actions/contactAction";
 const Dashboard = () => {
   const { products } = useSelector((state) => state.products);
   const { allOrderAdmin } = useSelector((state) => state.order);
   const { allUsersAdmin } = useSelector((state) => state.user);
+  const { contacts } = useSelector((state) => state.contact);
   const dispatch = useDispatch();
   let outOfStock = 0;
   products &&
@@ -110,12 +112,13 @@ const Dashboard = () => {
     allOrderAdmin.forEach((item) => {
       totalAmount += item.totalPrice;
     });
-
   useEffect(() => {
     dispatch(getAdminProducts());
     dispatch(allAdminOrder());
     dispatch(allUserAdmin());
+    dispatch(getAllContact());
   }, [dispatch]);
+
   return (
     <Layout title="Dashboard">
       <div className="top-items">
@@ -160,8 +163,8 @@ const Dashboard = () => {
                 <div className="icons">
                   <CommentIcon />
                 </div>
-                <div className="heading">Total Reviews</div>
-                <div className="total-number">20</div>
+                <div className="heading">Total Comment</div>
+                <div className="total-number">{contacts?.length}</div>
               </div>
             </Box>
           </Grid>
@@ -173,7 +176,7 @@ const Dashboard = () => {
             <Chart
               options={chartOptions.options}
               series={chartOptions.series}
-              type="line"
+              type="bar"
               height={400}
             />
           </Box>
