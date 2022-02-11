@@ -41,7 +41,6 @@ import SlideShow from "./view/admin/SlideShow";
 import AddNewSlider from "./view/admin/AddNewSlider";
 import SlideShowDetail from "./view/admin/SlideShowDetail";
 import ContactAdmin from "./view/admin/ContactAdmin";
-import CategoryAdmin from "./view/admin/CategoryAdmin";
 function App() {
   const [stripeApiKey, setStripeApiKey] = useState("");
   async function getStripeApiKey() {
@@ -172,14 +171,6 @@ function App() {
           path="/admin/contact"
           component={ContactAdmin}
         />
-
-        <ProtectedRoute
-          isAdmin={true}
-          exact
-          path="/admin/category"
-          component={CategoryAdmin}
-        />
-
         <ProtectedRoute exact path="/success" component={OrderSuccess} />
         <Route
           component={

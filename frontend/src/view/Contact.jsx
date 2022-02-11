@@ -44,7 +44,6 @@ const Contact = () => {
       dispatch({ type: CREATE_CONTACT_RESET });
     }
   }, [dispatch, alert, error, success, history]);
-
   return (
     <Layout>
       <MetaData title="Ecommerce - Contact" />
@@ -87,7 +86,7 @@ const Contact = () => {
           <TextareaAutosize
             aria-label="minimum height"
             minRows={10}
-            placeholder="Nodeted"
+            placeholder="Note"
             name="nodeted"
             value={nodeted}
             style={{ width: "97%", marginTop: "10px", padding: "8px" }}
