@@ -8,6 +8,7 @@ const initialState = {
   allOrderAdmin: [],
   isDeleted: null,
   isUpdated: null,
+  stripleKey: null,
 };
 
 export const orderReducer = (state = initialState, action) => {
@@ -18,6 +19,7 @@ export const orderReducer = (state = initialState, action) => {
     case types.ALL_ORDERS_REQUEST:
     case types.UPDATE_ORDER_REQUEST:
     case types.DELETE_ORDER_REQUEST:
+    case types.GET_STRIPLE_REQUEST:
       return {
         ...state,
         loading: true,
@@ -65,6 +67,7 @@ export const orderReducer = (state = initialState, action) => {
     case types.ALL_ORDERS_FAIL:
     case types.UPDATE_ORDER_FAIL:
     case types.DELETE_ORDER_FAIL:
+    case types.GET_STRIPLE_FAIL:
       return {
         loading: false,
         error: action.payload,
@@ -79,6 +82,15 @@ export const orderReducer = (state = initialState, action) => {
       return {
         ...state,
         isDeleted: false,
+      };
+
+    //striple key
+
+    case types.GET_STRIPLE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        stripleKey: action.payload.stripeApiKey,
       };
 
     case types.CLEAR_ERROR:

@@ -1,7 +1,7 @@
 import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import WebFont from "webfontloader";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Home from "./view/Home";
 import Product from "./view/Product";
 import Contact from "./view/Contact";
@@ -23,7 +23,6 @@ import ResetPassWord from "./view/ResetPassWord";
 import Cart from "./view/Cart";
 import Shipping from "./view/Shipping";
 import ConfirmOrder from "./view/ConfirmOrder";
-import axiosConfig from "./redux/config/axiosConfig";
 import { Elements } from "@stripe/react-stripe-js";
 import Payment from "./view/Payment";
 import { loadStripe } from "@stripe/stripe-js";
@@ -41,13 +40,10 @@ import SlideShow from "./view/admin/SlideShow";
 import AddNewSlider from "./view/admin/AddNewSlider";
 import SlideShowDetail from "./view/admin/SlideShowDetail";
 import ContactAdmin from "./view/admin/ContactAdmin";
+import { useSelector } from "react-redux";
 function App() {
-  const [stripeApiKey, setStripeApiKey] = useState("");
-  async function getStripeApiKey() {
-    const data = await axiosConfig.get("/stripeapikey");
-    setStripeApiKey(data.stripeApiKey);
-  }
   const users = JSON.parse(localStorage.getItem("users"));
+  const { stripleKey } = useSelector((state) => state.order);
   useEffect(() => {
     WebFont.load({
       google: {
@@ -56,17 +52,17 @@ function App() {
     });
     if (users) {
       store.dispatch(loadUser());
-      getStripeApiKey();
     }
   }, [users]);
 
   return (
     <Router>
-      {stripeApiKey && (
-        <Elements stripe={loadStripe(stripeApiKey)}>
+      {stripleKey && (
+        <Elements stripe={loadStripe(stripleKey)}>
           <ProtectedRoute exact path="/process/payment" component={Payment} />
         </Elements>
       )}
+
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/product/:id" component={ProductDetail} />

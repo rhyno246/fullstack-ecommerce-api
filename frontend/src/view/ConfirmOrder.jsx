@@ -1,14 +1,17 @@
 import { Typography } from "@mui/material";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import CheckoutSteps from "../component/CheckoutSteps";
 import Layout from "../component/layout/Layout";
 import MetaData from "../component/layout/MetaData";
+import { getStripleKey } from "../redux/actions/orderAction";
 
 const ConfirmOrder = () => {
+  const dispatch = useDispatch();
   const { shippingInfo, cartItems } = useSelector((state) => state.cart);
   const { users } = useSelector((state) => state.user);
+  const { loading } = useSelector((state) => state.order);
   const subtotal = cartItems.reduce(
     (acc, item) => acc + item.quantity * item.price,
     0
@@ -29,7 +32,7 @@ const ConfirmOrder = () => {
       totalPrice,
     };
     localStorage.setItem("orderInfo", JSON.stringify(data));
-
+    dispatch(getStripleKey());
     history.push("/process/payment");
   };
   return (
@@ -104,7 +107,12 @@ const ConfirmOrder = () => {
               <span>${totalPrice}</span>
             </div>
 
-            <button onClick={proceedToPayment}>Proceed To Payment</button>
+            <button
+              onClick={proceedToPayment}
+              disabled={loading ? true : false}
+            >
+              Proceed To Payment
+            </button>
           </div>
         </div>
       </div>

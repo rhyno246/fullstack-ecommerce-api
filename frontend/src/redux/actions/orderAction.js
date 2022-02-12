@@ -93,6 +93,27 @@ export const deleteOrderAdmin = (id) => async (dispatch) => {
   }
 };
 
+// striple key
+
+export const getStripleKey = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: types.GET_STRIPLE_REQUEST,
+    });
+    const data = await axiosConfig.get(`/stripeapikey`);
+    dispatch({
+      type: types.GET_STRIPLE_SUCCESS,
+      payload: data,
+    });
+    // localStorage.setItem("striple", JSON.stringify(data.stripeApiKey));
+  } catch (error) {
+    dispatch({
+      type: types.GET_STRIPLE_FAIL,
+      payload: error.response.data.error,
+    });
+  }
+};
+
 export const clearErrors = () => async (dispatch) => {
   dispatch({ type: types.CLEAR_ERROR });
 };
