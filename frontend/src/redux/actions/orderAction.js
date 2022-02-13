@@ -105,7 +105,6 @@ export const getStripleKey = () => async (dispatch) => {
       type: types.GET_STRIPLE_SUCCESS,
       payload: data,
     });
-    // localStorage.setItem("striple", JSON.stringify(data.stripeApiKey));
   } catch (error) {
     dispatch({
       type: types.GET_STRIPLE_FAIL,
