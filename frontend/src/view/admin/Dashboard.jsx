@@ -13,6 +13,7 @@ import { allAdminOrder } from "../../redux/actions/orderAction";
 import { allUserAdmin } from "../../redux/actions/userAction";
 import { DataGrid } from "@mui/x-data-grid";
 import { getAllContact } from "../../redux/actions/contactAction";
+import moment from "moment";
 const Dashboard = () => {
   const { products } = useSelector((state) => state.products);
   const { allOrderAdmin } = useSelector((state) => state.order);
@@ -20,6 +21,7 @@ const Dashboard = () => {
   const { contacts } = useSelector((state) => state.contact);
   const dispatch = useDispatch();
   let outOfStock = 0;
+
   products &&
     products.forEach((item) => {
       if (item.stock === 0) {
@@ -27,11 +29,34 @@ const Dashboard = () => {
       }
     });
 
+  const categorie = allOrderAdmin?.map((item) =>
+    moment(item.createdAt).format("DD/MM/YYYY")
+  );
+
+  function countInArr(arr) {
+    var a = [],
+      b = [],
+      prev;
+    arr.sort();
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i] !== prev) {
+        a.push(arr[i]);
+        b.push(1);
+      } else {
+        b[b.length - 1]++;
+      }
+      prev = arr[i];
+    }
+
+    return [a, b];
+  }
+
+  const dataOrder = countInArr(categorie);
   const chartOptions = {
     series: [
       {
         name: "User Orders",
-        data: [40, 70, 20, 90, 36, 80, 30, 91, 60],
+        data: dataOrder[1],
       },
     ],
     options: {
@@ -47,17 +72,7 @@ const Dashboard = () => {
       },
       xaxis: {
         type: "category",
-        categories: [
-          "Jan",
-          "Feb",
-          "Mar",
-          "Apr",
-          "May",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sep",
-        ],
+        categories: dataOrder[0],
       },
       legend: {
         position: "top",
