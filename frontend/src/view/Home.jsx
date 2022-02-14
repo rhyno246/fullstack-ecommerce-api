@@ -55,10 +55,10 @@ const Home = () => {
               {sliders?.map((item, i) => (
                 <SwiperSlide key={i}>
                   <img src={item?.image?.url} alt={item.heading} />
-                  <div className="box-slider">
+                  {/* <div className="box-slider">
                     <h3 className="heading">{item.heading}</h3>
                     <p className="description">{item.description}</p>
-                  </div>
+                  </div> */}
                 </SwiperSlide>
               ))}
             </Swiper>
