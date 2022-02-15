@@ -997,6 +997,7 @@ button.MuiButtonBase-root.MuiFab-root.MuiFab-circular.MuiFab-sizeLarge.MuiFab-pr
 .wrapper-mini-slide {
   display: flex;
   width: 100%;
+  justify-content: center;
 }
 @media screen and (max-width: 600px) {
   .wrapper-mini-slide {

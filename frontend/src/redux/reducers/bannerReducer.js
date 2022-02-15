@@ -14,6 +14,7 @@ export const bannerReducer = (state = initialState, action) => {
     case types.CREATE_SLIDER_REQUEST:
     case types.SLIDER_DETAILS_REQUEST:
     case types.UPDATE_SLIDER_REQUEST:
+    case types.DELETE_SLIDER_REQUEST:
       return {
         ...state,
         loading: true,
@@ -54,6 +55,7 @@ export const bannerReducer = (state = initialState, action) => {
     case types.CREATE_SLIDER_FAIL:
     case types.SLIDER_DETAILS_FAIL:
     case types.UPDATE_SLIDER_FAIL:
+    case types.DELETE_SLIDER_FAIL:
       return {
         ...state,
         loading: false,
