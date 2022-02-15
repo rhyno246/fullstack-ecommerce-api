@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../component/layout/Layout";
 import ProductItem from "../component/ProductItem";
 import Grid from "@mui/material/Grid";
@@ -20,6 +20,7 @@ const Home = () => {
   const dispatch = useDispatch();
   const { loading, products, error } = useSelector((state) => state.products);
   const { sliders } = useSelector((state) => state.banner);
+  const [index, setIndex] = useState(0);
   useEffect(() => {
     if (error) {
       alert.error(error);
@@ -28,6 +29,11 @@ const Home = () => {
     dispatch(getAllProduct());
     dispatch(getAllSlider());
   }, [dispatch, alert, error]);
+
+  const onSlideChangeBanner = (item) => {
+    setIndex(item.activeIndex);
+  };
+
   return (
     <Layout>
       <MetaData title="Ecommerce - Home" />
@@ -40,28 +46,37 @@ const Home = () => {
               spaceBetween={50}
               slidesPerView={1}
               centeredSlides={true}
-              loop={true}
               pagination={{
                 clickable: true,
-              }}
-              autoplay={{
-                delay: 2500,
-                disableOnInteraction: false,
               }}
               navigation={true}
               modules={[Autoplay, Navigation]}
               className="mySwiper"
+              style={{
+                "--swiper-navigation-color": "#ddd",
+                "--swiper-pagination-color": "#ddd",
+              }}
+              onSlideChange={(item) => onSlideChangeBanner(item)}
             >
               {sliders?.map((item, i) => (
                 <SwiperSlide key={i}>
                   <img src={item?.image?.url} alt={item.heading} />
-                  {/* <div className="box-slider">
-                    <h3 className="heading">{item.heading}</h3>
-                    <p className="description">{item.description}</p>
-                  </div> */}
                 </SwiperSlide>
               ))}
             </Swiper>
+            <div className="wrapper-mini-slide">
+              {sliders?.map((item, i) => (
+                <div
+                  className={`box-slider ${
+                    index === i ? "active-small-slide" : ""
+                  }`}
+                  key={i}
+                >
+                  <h3 className="heading">{item.heading}</h3>
+                  <p className="description">{item.description}</p>
+                </div>
+              ))}
+            </div>
           </Box>
           {products?.length ? (
             <Box sx={{ width: "100%" }}>

@@ -31,7 +31,6 @@ exports.createProduct = catchAsynchErrors(async (req, res) => {
     .status(201)
     .json({ success: true, message: "create product success", product });
 });
-
 //get all
 exports.getAllProduct = catchAsynchErrors(async (req, res) => {
   const resultPerPage = 10;

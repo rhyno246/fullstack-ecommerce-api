@@ -944,23 +944,62 @@ button.MuiButtonBase-root.MuiFab-root.MuiFab-circular.MuiFab-sizeLarge.MuiFab-pr
   margin-left: auto;
   margin-right: auto;
 }
-.box-slider {
-  position: absolute;
-}
 
 .box-slider {
-  bottom: 0;
-  position: absolute;
-  background: #1976d2;
-  width: 100%;
   padding: 10px 0;
+  background: #fff;
+  width: 20%;
+  text-align: center;
+  position: relative;
 }
+
+.box-slider::before {
+  content: "";
+  display: block;
+  width: 1px;
+  height: 50%;
+  background: #ddd;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translate(50%, -50%);
+}
+
+.box-slider:last-child::before {
+  display: none;
+}
+
 .box-slider .heading {
   margin: 0;
-  color: #fff;
+  color: #000;
   font-weight: normal;
+  padding-bottom: 5px;
+  font-weight: bold;
 }
 .box-slider p {
   margin: 0;
-  color: #fff;
+  color: #000;
+}
+.active-small-slide {
+  position: relative;
+}
+.active-small-slide::after {
+  display: block;
+  content: "";
+  width: 100%;
+  height: 3px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #fed100;
+}
+
+.wrapper-mini-slide {
+  display: flex;
+  width: 100%;
+}
+@media screen and (max-width: 600px) {
+  .wrapper-mini-slide {
+    display: none;
+  }
 }
