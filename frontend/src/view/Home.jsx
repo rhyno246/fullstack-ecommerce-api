@@ -6,7 +6,7 @@ import Box from "@mui/material/Box";
 import { Container } from "@mui/material";
 import MetaData from "../component/layout/MetaData";
 import { useDispatch, useSelector } from "react-redux";
-import { clearErrors, getAllProduct } from "../redux/actions/productAction";
+import { clearErrors, getAdminProducts } from "../redux/actions/productAction";
 import { useAlert } from "react-alert";
 import Loader from "../component/Loader";
 import { getAllSlider } from "../redux/actions/bannerAction";
@@ -26,7 +26,7 @@ const Home = () => {
       alert.error(error);
       dispatch(clearErrors());
     }
-    dispatch(getAllProduct());
+    dispatch(getAdminProducts());
     dispatch(getAllSlider());
   }, [dispatch, alert, error]);
 
