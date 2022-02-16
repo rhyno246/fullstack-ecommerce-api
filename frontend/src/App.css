@@ -1004,3 +1004,8 @@ button.MuiButtonBase-root.MuiFab-root.MuiFab-circular.MuiFab-sizeLarge.MuiFab-pr
     display: none;
   }
 }
+button.MuiButtonBase-root.MuiFab-root.MuiFab-circular.MuiFab-sizeLarge.MuiFab-primary.MuiSpeedDial-fab.css-md8nuk {
+  width: 45px;
+  height: 45px;
+  overflow: hidden;
+}

@@ -74,12 +74,19 @@ const ListUsers = () => {
       renderCell: (params) => {
         return (
           <>
-            {params.row.role === "user" && <Link to={`/admin/users/${params.id}`} style={{ color: "#1976d2" }}>
-              <EditIcon />
-            </Link>}
-            {params.row.role === "user" && <Button onClick={() => deleteUserHandler(params.id)}>
-              <DeleteIcon />
-            </Button>}
+            {params.row.role === "user" && (
+              <Link
+                to={`/admin/users/${params.id}`}
+                style={{ color: "#1976d2" }}
+              >
+                <EditIcon />
+              </Link>
+            )}
+            {params.row.role === "user" && (
+              <Button onClick={() => deleteUserHandler(params.id)}>
+                <DeleteIcon />
+              </Button>
+            )}
           </>
         );
       },

@@ -24,12 +24,15 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { NEW_REVIEW_RESET } from "../redux/types";
+import Loader from "../component/Loader";
 
 const ProductDetail = () => {
   const alert = useAlert();
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
-  const { product, error, success } = useSelector((state) => state.products);
+  const { product, error, success, loading } = useSelector(
+    (state) => state.products
+  );
   const [quantity, setQuantity] = useState(1);
   const param = useParams();
   const { id } = param;
@@ -127,118 +130,125 @@ const ProductDetail = () => {
           </Button>
         </DialogActions>
       </Dialog>
-
-      <Container>
-        <Grid container spacing={2}>
-          <Grid item xl={7} md={7} sm={12} xs={12}>
-            <div className="product-view">
-              <img
-                src={product.images ? product.images[index].url : null}
-                alt=""
-                className="img-res"
-              />
-            </div>
-          </Grid>
-          <Grid item xl={5} md={5} sm={12} xs={12}>
-            <h2 className="heading-detail">{product?.name}</h2>
-            <div className="review">
-              <Rating
-                name="read-only"
-                value={product.ratings ? product.ratings : 0}
-                precision={0.5}
-                readOnly
-              />
-
-              <div className="review-detail">
-                {product?.numOfReviews === 0
-                  ? ""
-                  : `(${product.numOfReviews} Review)`}
+      {loading ? (
+        <Loader />
+      ) : (
+        <Container>
+          <Grid container spacing={2}>
+            <Grid item xl={7} md={7} sm={12} xs={12}>
+              <div className="product-view">
+                <img
+                  src={product.images ? product.images[index].url : null}
+                  alt=""
+                  className="img-res"
+                />
               </div>
-            </div>
-            <div className="price-detail">{product?.price}$</div>
-            <div
-              className="cartitem-control"
-              style={{ margin: "20px 0", justifyContent: "flex-start" }}
-            >
-              {product?.stock === 0 ? null : (
-                <>
-                  <Button
-                    variant="contained"
-                    sx={{ padding: "0px", minWidth: "35px" }}
-                    onClick={decrimentQuantity}
-                  >
-                    -
-                  </Button>
-                  <InputNumber
-                    controls={true}
-                    type="number"
-                    max={product?.stock}
-                    min={1}
-                    value={quantity}
-                    onChange={handleOnchange}
-                  />
-                  <Button
-                    variant="contained"
-                    sx={{ padding: "0px", minWidth: "35px" }}
-                    onClick={increaseQuantity}
-                  >
-                    +
-                  </Button>
-                </>
-              )}
-            </div>
+            </Grid>
+            <Grid item xl={5} md={5} sm={12} xs={12}>
+              <h2 className="heading-detail">{product?.name}</h2>
+              <div className="review">
+                <Rating
+                  name="read-only"
+                  value={product.ratings ? product.ratings : 0}
+                  precision={0.5}
+                  readOnly
+                />
 
-            <div className="submit-review">
-              <Button variant="contained" onClick={handleClickOpen}>
-                Write Review
-              </Button>
-              <div className="add-tocart">
-                <Button
-                  variant="contained"
-                  disabled={product?.stock === 0 ? true : false}
-                  onClick={hanleAddToCart}
-                >
-                  Add to cart
-                </Button>
-              </div>
-            </div>
-
-            <div className="child-product">
-              {product?.images?.map((item, i) => (
-                <div
-                  className={`items ${index === i ? "active" : ""}`}
-                  key={i}
-                  onClick={() => hanleClickSlide(i)}
-                >
-                  <img src={item?.url} alt={`${i}-Slide`} className="img-res" />
+                <div className="review-detail">
+                  {product?.numOfReviews === 0
+                    ? ""
+                    : `(${product.numOfReviews} Review)`}
                 </div>
-              ))}
-            </div>
-            <div className="status">
-              Status :{" "}
-              <span
-                className={`${product.stock === 0 ? "outstock" : "instock"}`}
+              </div>
+              <div className="price-detail">{product?.price}$</div>
+              <div
+                className="cartitem-control"
+                style={{ margin: "20px 0", justifyContent: "flex-start" }}
               >
-                {product.stock === 0 ? "OutStock" : "InStock"}
-              </span>
-            </div>
-            <div className="short-desc">{product.description}</div>
-          </Grid>
-        </Grid>
+                {product?.stock === 0 ? null : (
+                  <>
+                    <Button
+                      variant="contained"
+                      sx={{ padding: "0px", minWidth: "35px" }}
+                      onClick={decrimentQuantity}
+                    >
+                      -
+                    </Button>
+                    <InputNumber
+                      controls={true}
+                      type="number"
+                      max={product?.stock}
+                      min={1}
+                      value={quantity}
+                      onChange={handleOnchange}
+                    />
+                    <Button
+                      variant="contained"
+                      sx={{ padding: "0px", minWidth: "35px" }}
+                      onClick={increaseQuantity}
+                    >
+                      +
+                    </Button>
+                  </>
+                )}
+              </div>
 
-        <div className="user-review">
-          <h3 className="review-heading">Reviews</h3>
-          {product?.reviews?.length ? (
-            <div className="review-item">
-              {product?.reviews?.map((item, i) => (
-                <Reviews key={i} item={item} />
-              ))}
-            </div>
-          ) : (
-            <div className="no-review">No Reviews Yet</div>
-          )}
-        </div>
-      </Container>
+              <div className="submit-review">
+                <Button variant="contained" onClick={handleClickOpen}>
+                  Write Review
+                </Button>
+                <div className="add-tocart">
+                  <Button
+                    variant="contained"
+                    disabled={product?.stock === 0 ? true : false}
+                    onClick={hanleAddToCart}
+                  >
+                    Add to cart
+                  </Button>
+                </div>
+              </div>
+
+              <div className="child-product">
+                {product?.images?.map((item, i) => (
+                  <div
+                    className={`items ${index === i ? "active" : ""}`}
+                    key={i}
+                    onClick={() => hanleClickSlide(i)}
+                  >
+                    <img
+                      src={item?.url}
+                      alt={`${i}-Slide`}
+                      className="img-res"
+                    />
+                  </div>
+                ))}
+              </div>
+              <div className="status">
+                Status :{" "}
+                <span
+                  className={`${product.stock === 0 ? "outstock" : "instock"}`}
+                >
+                  {product.stock === 0 ? "OutStock" : "InStock"}
+                </span>
+              </div>
+              <div className="short-desc">{product.description}</div>
+            </Grid>
+          </Grid>
+
+          <div className="user-review">
+            <h3 className="review-heading">Reviews</h3>
+            {product?.reviews?.length ? (
+              <div className="review-item">
+                {product?.reviews?.map((item, i) => (
+                  <Reviews key={i} item={item} />
+                ))}
+              </div>
+            ) : (
+              <div className="no-review">No Reviews Yet</div>
+            )}
+          </div>
+        </Container>
+      )}
     </Layout>
   );
 };

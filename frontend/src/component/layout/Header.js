@@ -223,6 +223,7 @@ const Header = () => {
                   position: "absolute",
                   top: { md: "10px", xs: "8px" },
                   right: 16,
+                  overflow: "hidden",
                 }}
                 icon={
                   <img
